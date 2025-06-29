@@ -1,0 +1,33 @@
+2025-06-28 23:38:34,403 INFO [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.86.25:5000
+2025-06-28 23:38:34,403 INFO [33mPress CTRL+C to quit[0m
+2025-06-28 23:38:34,423 INFO  * Restarting with watchdog (windowsapi)
+2025-06-28 23:38:35,877 WARNING  * Debugger is active!
+2025-06-28 23:38:35,880 INFO  * Debugger PIN: xxx-xxx-xxx
+2025-06-28 23:42:04,445 INFO 127.0.0.1 - - [28/Jun/2025 23:42:04] "OPTIONS /chat HTTP/1.1" 200 -
+2025-06-28 23:42:04,710 INFO Incoming request: {'message': 'hey'}
+2025-06-28 23:42:04,711 INFO Parsed user_message: hey, max_tokens: 1500, temperature: 0.7
+2025-06-28 23:42:04,711 INFO Payload to OpenRouter: {'model': 'deepseek/deepseek-r1-0528:free', 'messages': [{'role': 'system', 'content': 'You are an AI assistant. Always reply in English.'}, {'role': 'user', 'content': 'hey'}], 'max_tokens': 1500, 'temperature': 0.7}
+2025-06-28 23:45:23,338 INFO Incoming request: {'message': 'Can you plan a day ffor me, I love spending time in nature and I live near marsh creek, in PA'}
+2025-06-28 23:45:23,338 INFO Parsed user_message: Can you plan a day ffor me, I love spending time in nature and I live near marsh creek, in PA, max_tokens: 1500, temperature: 0.7
+2025-06-28 23:45:23,338 INFO Payload to OpenRouter: {'model': 'deepseek/deepseek-r1-0528:free', 'messages': [{'role': 'system', 'content': 'You are an AI assistant. Always reply in English.'}, {'role': 'user', 'content': 'Can you plan a day ffor me, I love spending time in nature and I live near marsh creek, in NJ'}], 'max_tokens': 1500, 'temperature': 0.7}
+2025-06-28 23:49:03,675 INFO Incoming request: {'message': 'hello Deepseek'}
+2025-06-28 23:49:03,675 INFO Parsed user_message: hello Deepseek, max_tokens: 1500, temperature: 0.7
+2025-06-28 23:49:03,675 INFO Payload to OpenRouter: {'model': 'deepseek/deepseek-r1-0528:free', 'messages': [{'role': 'system', 'content': 'You are an AI assistant. Always reply in English.'}, {'role': 'user', 'content': 'hello Deepseek'}], 'max_tokens': 1500, 'temperature': 0.7}
+2025-06-28 23:55:23,215 INFO 127.0.0.1 - - [28/Jun/2025 23:55:23] "OPTIONS /chat HTTP/1.1" 200 -
+2025-06-28 23:55:23,464 INFO Incoming request: {'message': 'Can you help me with understanding AI?'}
+2025-06-28 23:55:23,464 INFO Parsed user_message: Can you help me with understanding AI?, max_tokens: 1500, temperature: 0.7
+2025-06-28 23:55:23,464 INFO Payload to OpenRouter: {'model': 'deepseek/deepseek-r1-0528:free', 'messages': [{'role': 'system', 'content': 'You are an AI assistant. Always reply in English.'}, {'role': 'user', 'content': 'Can you help me with understanding AI?'}], 'max_tokens': 1500, 'temperature': 0.7}
+2025-06-28 23:57:55,995 INFO Incoming request: {'message': 'hello'}
+2025-06-28 23:57:55,996 INFO Parsed user_message: hello, max_tokens: 1500, temperature: 0.7
+2025-06-28 23:57:55,997 INFO Payload to OpenRouter: {'model': 'deepseek/deepseek-r1-0528:free', 'messages': [{'role': 'system', 'content': 'You are an AI assistant. Always reply in English.'}, {'role': 'user', 'content': 'hello'}], 'max_tokens': 1500, 'temperature': 0.7}
+2025-06-28 23:58:01,010 INFO 127.0.0.1 - - [28/Jun/2025 23:58:01] "POST /chat HTTP/1.1" 200 -
+2025-06-29 00:03:29,100 INFO Incoming request: {'message': 'hello Deepseek'}
+2025-06-29 00:03:29,101 INFO Parsed user_message: hello Deepseek, max_tokens: 1500, temperature: 0.7
+2025-06-29 00:03:29,102 INFO Payload to OpenRouter: {'model': 'deepseek/deepseek-r1-0528:free', 'messages': [{'role': 'system', 'content': 'You are an AI assistant. Always reply in English.'}, {'role': 'user', 'content': 'hello Deepseek'}], 'max_tokens': 1500, 'temperature': 0.7}
+2025-06-29 00:06:25,497 INFO Incoming request: {'message': 'how are you doing?'}
+2025-06-29 00:06:25,498 INFO Parsed user_message: how are you doing?, max_tokens: 1500, temperature: 0.7
+2025-06-29 00:06:25,499 INFO Payload to OpenRouter: {'model': 'deepseek/deepseek-r1-0528:free', 'messages': [{'role': 'system', 'content': 'You are an AI assistant. Always reply in English.'}, {'role': 'user', 'content': 'how are you doing?'}], 'max_tokens': 1500, 'temperature': 0.7}
+2025-06-29 00:06:40,216 INFO 127.0.0.1 - - [29/Jun/2025 00:06:40] "POST /chat HTTP/1.1" 200 -
