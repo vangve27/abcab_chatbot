@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ABCAB_Chatbot</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #f4f4f4; margin: 0; padding: 0; }
+        #chatbox { width: 100vw; height: 100vh; margin: 0; background: #fff; border-radius: 0; box-shadow: none; padding: 0; display: flex; flex-direction: column; }
+        #messages { flex: 1; overflow-y: auto; border: none; padding: 24px; margin-bottom: 0; background: #fafafa; }
+        .msg { margin: 8px 0; }
+        .user { color: #0074d9; }
+        .bot { color: #303730; }
+        #input { width: 80%; padding: 12px; font-size: 1.1em; }
+        #send { padding: 12px 24px; font-size: 1.1em; }
+        #input, #send { margin-bottom: 24px; }
+        #input-send-row { display: flex; align-items: center; padding: 0 24px 24px 24px; }
+        #input { width: 80%; margin-bottom: 0; }
+        #send { margin-left: 12px; margin-bottom: 0; }
+        @media (max-width: 600px) {
+            #chatbox { width: 100vw; height: 100vh; }
+            #input { width: 70%; }
+        }
+    </style>
+</head>
+<body>
+    <div id="chatbox">
+        <h2>Abcab_Chatbot</h2>
+        <div id="messages"></div>
+        <div id="input-send-row">
+            <input type="text" id="input" placeholder="Type your message..." />
+            <button id="send">Send</button>
+        </div>
+    </div>
+    <script>
+        const messagesDiv = document.getElementById('messages');
+        const input = document.getElementById('input');
+        const sendBtn = document.getElementById('send');
+
+        function appendMessage(text, sender) {
+            const div = document.createElement('div');
+            div.className = 'msg ' + sender;
+            // Detect if the response looks like code (triple backticks or starts with def/class/import/for/if/while/return)
+            const codePattern = /```[\s\S]*?```|^(def |class |import |for |if |while |return )/m;
+            if (codePattern.test(text)) {
+                // Format code blocks
+                let code = text;
+                const tripleBacktick = text.match(/```([\s\S]*?)```/);
+                if (tripleBacktick) {
+                    code = tripleBacktick[1];
+                }
+                const pre = document.createElement('pre');
+                pre.textContent = code.trim();
+                div.textContent = (sender === 'user' ? 'You: ' : 'Abcab_bot: ');
+                div.appendChild(pre);
+            } else {
+                // Format markdown-like lists, headings, and blockquotes for better readability
+                let html = text
+                    .replace(/### (.*?)(?=\n|$)/g, '<h3>$1</h3>')
+                    .replace(/\*\*(.*?)\*\*/g, '<b>$1</b>')
+                    .replace(/^- (.*?)(?=\n|$)/gm, '<li>$1</li>')
+                    .replace(/> (.*?)(?=\n|$)/g, '<blockquote>$1</blockquote>')
+                    .replace(/\n{2,}/g, '<br>');
+                // Wrap <li> in <ul> if any list items exist
+                if (/<li>/.test(html)) {
+                    html = html.replace(/(<li>[\s\S]*?<\/li>)/g, '<ul>$1</ul>');
+                }
+                div.innerHTML = (sender === 'user' ? '<b>You:</b> ' : '<b>Abcab_bot:</b> ') + html;
+            }
+            messagesDiv.appendChild(div);
+            messagesDiv.scrollTop = messagesDiv.scrollHeight;
+        }
+
+        sendBtn.onclick = async function() {
+            const text = input.value.trim();
+            if (!text) return;
+            appendMessage(text, 'user');
+            input.value = '';
+            appendMessage('...', 'bot');
+            try {
+                const res = await fetch('http://localhost:5000/chat', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ message: text })
+                });
+                const data = await res.json();
+                messagesDiv.removeChild(messagesDiv.lastChild); // remove '...'
+                appendMessage(data.reply, 'bot');
+                // Fetch and show the raw response directly from the API response
+                const toggleBtn = document.createElement('button');
+                toggleBtn.textContent = 'Show Full Raw Response';
+                toggleBtn.style.marginLeft = '10px';
+                let fullVisible = false;
+                let fullDiv = null;
+                toggleBtn.onclick = function() {
+                    if (!fullVisible) {
+                        fullDiv = document.createElement('pre');
+                        try {
+                            fullDiv.textContent = JSON.stringify(data.raw, null, 2);
+                        } catch {
+                            fullDiv.textContent = data.raw ? String(data.raw) : 'Raw response not found.';
+                        }
+                        messagesDiv.appendChild(fullDiv);
+                        toggleBtn.textContent = 'Hide Full Raw Response';
+                        fullVisible = true;
+                    } else {
+                        if (fullDiv) messagesDiv.removeChild(fullDiv);
+                        toggleBtn.textContent = 'Show Full Raw Response';
+                        fullVisible = false;
+                    }
+                };
+                messagesDiv.appendChild(toggleBtn);
+            } catch (err) {
+                messagesDiv.removeChild(messagesDiv.lastChild);
+                appendMessage('Error: Could not reach backend.', 'bot');
+            }
+        };
+
+        input.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') sendBtn.onclick();
+        });
+    </script>
+</body>
+</html>
