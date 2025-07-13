@@ -74,6 +74,4 @@ This will serve the frontend at `http://localhost:8000/chat.html`.
 
 ---
 
-**Author:** Veeresh
-
 For questions or issues, check the logs or contact the author.
